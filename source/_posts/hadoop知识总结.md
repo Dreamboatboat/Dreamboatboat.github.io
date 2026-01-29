@@ -1,11 +1,23 @@
 ---
 title: Hadoop知识总结
 date: 2026-01-14 22:43:55
-tags:
+tags: bigdata
 ---
 
 
-![](mypicture.jpg)
+![](hadoop_architecture.png)
+## 开头
+Hadoop 是一个面向海量数据的分布式系统，核心由 HDFS 分布式存储 和 MapReduce 分布式计算 组成，整体采用 Master–Slave 架构。
+在存储层，HDFS 中
+NameNode 负责管理元数据，比如文件目录结构、文件到 Block 以及 Block 到 DataNode 的映射；
+DataNode 负责真正存储数据块，每个数据块会有多个副本来保证高可靠性；
+Secondary NameNode 用于做元数据的检查点合并，减轻 NameNode 的压力，但它不是热备。
+在计算层，MapReduce 中
+JobTracker 负责接收作业、拆分任务并进行调度；
+TaskTracker 在各个节点上执行具体的 Map 和 Reduce 任务，并向 JobTracker 汇报状态。
+整体设计的关键点是 数据本地性，也就是尽量让计算靠近数据，减少网络 IO，从而提升性能和可扩展性。
+在此基础上，像 Hive、HBase、Pig、Zookeeper 等生态组件，分别提供 SQL 查询、实时随机读写和分布式协调能力，构成完整的大数据处理体系。
+在 Hadoop 2.x 之后，MapReduce 的资源调度被 YARN 接管，系统的扩展性和资源利用率进一步提升。
 
 ## 1、Hadoop的核心组件是什么？它们在大数据处理中的角色是什么？
 
